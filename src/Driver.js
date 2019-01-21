@@ -1,8 +1,8 @@
 class Driver {
     constructor(driverName) {
         this._driverName = driverName;
-        this._totalDrivingTimeInHrs = 0;
-        this._totalDistInMiles = 0;
+        this._drivingTimeHours = 0;
+        this._milesDriven = 0;
         this._milesPerHour = 0;
     }
 
@@ -24,20 +24,20 @@ class Driver {
     }
 
     setMilesPerHour() {
-        this._milesPerHour = Math.round(this._totalDistInMiles / this._totalDrivingTimeInHrs);
+        this._milesPerHour = Math.round(this._milesDriven / this._drivingTimeHours);
     }
 
     getTotalDistInMiles() {
-        return this._totalDistInMiles;
+        return this._milesDriven;
     }
 
     setTotalDistInMiles(distInMiles) {
-        this._totalDistInMiles += distInMiles;
-        return this._totalDistInMiles;
+        this._milesDriven += distInMiles;
+        return this._milesDriven;
     }
 
     getTotalTimeInHrs() {
-        return this._totalDrivingTimeInHrs;
+        return this._drivingTimeHours;
     }
 
     setTotalTimeInHrs(drivingTime) {
@@ -45,13 +45,13 @@ class Driver {
         const [startHour, startMin] = this._convertTimeToNumber(startTime);
         const [endHour, endMin] = this._convertTimeToNumber(endTime);
         const drivingTimes = { startHour, startMin, endHour, endMin };
-        this._totalDrivingTimeInHrs += this._calcTotalTimeInHrs(drivingTimes);
+        this._drivingTimeHours += this._calcTotalTimeInHrs(drivingTimes);
     }
 
     getRecord() {
-        let driverDescription = `${this._driverName}: ${this._totalDistInMiles} miles`;
+        let driverDescription = `${this._driverName}: ${this._milesDriven} miles`;
 
-        const driverHasTraveled = this._totalDistInMiles;
+        const driverHasTraveled = this._milesDriven;
         if (driverHasTraveled) {
             driverDescription += ` @ ${this._milesPerHour} mph`;
         }
