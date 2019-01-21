@@ -25,18 +25,22 @@ const hardCodedDriverRecordHash = {
 
 const hardCodedDriversNotSorted = [new Driver("Dan"), new Driver("Alex"), new Driver("Bob")];
 
+let driverRecordsData = "Driver Dan\n";
+    driverRecordsData += "Driver Alex\n";
+    driverRecordsData += "Driver Bob\n";
+    driverRecordsData += "Trip Dan 07:15 07:45 17.3\n";
+    driverRecordsData += "Trip Dan 06:12 06:32 21.8\n";
+    driverRecordsData += "Trip Alex 12:01 13:16 42.0";
+
 describe("utils.js", () => {
     describe("createHash method", () => {
         test("returns a hash map of drivers", () => {
-            let driverRecordsData = "Driver Dan\n";
-            driverRecordsData += "Driver Alex\n";
-            driverRecordsData += "Driver Bob\n";
-            driverRecordsData += "Trip Dan 07:15 07:45 17.3\n";
-            driverRecordsData += "Trip Dan 06:12 06:32 21.8\n";
-            driverRecordsData += "Trip Alex 12:01 13:16 42.0";
+            expect(createHash(driverRecordsData)).toEqual(hardCodedDriverRecordHash);
+        });
 
-            const driverRecordHash = createHash(driverRecordsData);
-            expect(driverRecordHash).toEqual(hardCodedDriverRecordHash);
+        test("throw an error with invalid data", () => {
+            driverRecordsData += "\n";
+            expect(() => createHash(driverRecordsData)).toThrow("Unrecognized command");
         });
     });
 

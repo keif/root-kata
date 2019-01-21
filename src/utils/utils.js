@@ -6,72 +6,55 @@ import Driver from "../Driver";
 const MIN_SPEED_MPH = 5;
 const MAX_SPEED_MPH = 100;
 
-function readFile() {
-    return new Promise((resolve, reject) => {
-        const driversRecordsFile = process.argv[2];
-        fs.readFile(driversRecordsFile, "utf8", (err, data) => {
-            if (err) {
-                reject(err);
-            } else {
-                const driversRecordsHashTbl = createHash(data);
-                let idx = 0;
-
-                const driversRecords = Object.keys(driversRecordsHashTbl).reduce((accumulator, driver) => {
-                    const currDriver = driversRecordsHashTbl[driver];
-                    const driverAverageSpeed = currDriver.getMilesPerHour();
-                    const driverSpeedInRange =
-                        driverAverageSpeed >= MIN_SPEED_MPH && driverAverageSpeed <= MAX_SPEED_MPH;
-                    const driverDidNotTravel = driverAverageSpeed === 0;
-
-                    if (driverSpeedInRange || driverDidNotTravel) {
-                        accumulator[idx] = currDriver;
-                        idx += 1;
-                    }
-
-                    return accumulator;
-                }, []);
-
-                sortDrivers(driversRecords, "desc", "dist");
-                console.table(driversRecords);
-                let driverRecordsOutput = getDriversRecordsOutput(driversRecords);
-                resolve(driverRecordsOutput);
-            }
-        });
-    });
-}
-
-function createHash(fileData) {
+const createHash = fileData => {
     if (fileData.length == 0) return {};
 
     const data = fileData.split("\n");
-    const hash = {};
 
-    data.forEach((val) => {
-        const [command, name, ...rest] = val.split(" ");
+    return data.reduce((driverHash, currentValue) => {
+        const [command, name, ...rest] = currentValue.split(" ");
 
         if (command === "Driver") {
-            hash[name] = new Driver(name);
+            driverHash[name] = new Driver(name);
         } else if (command === "Trip") {
             const distInMiles = Math.round(Number(rest[2]));
-            hash[name].setTotalDistInMiles(distInMiles);
-            hash[name].setTotalTimeInHrs(rest);
-            hash[name].setMilesPerHour();
+            driverHash[name].setTotalDistInMiles(distInMiles);
+            driverHash[name].setTotalTimeInHrs(rest);
+            driverHash[name].setMilesPerHour();
         } else {
             throw new Error("Unrecognized command");
         }
-    });
 
-    return hash;
-}
+        return driverHash;
+    }, {});
+};
 
-function getDriversRecordsOutput(listOfDrivers) {
+const getDriversRecordsOutput = listOfDrivers => {
     return listOfDrivers.reduce((acc, nxt) => {
         acc += nxt.getRecord() + "\n";
         return acc;
     }, "");
-}
+};
 
-function sortDrivers(listOfDrivers, direction, type) {
+const readFile = () => {
+    return new Promise((resolve, reject) => {
+        const file = process.argv[2];
+
+        fs.readFile(file, "utf8", (err, data) => {
+            if (err) {
+                reject(err);
+            } else {
+                const hashTbl = createHash(data);
+                const driversRecords = validateDriverRecords(hashTbl);
+                const driverRecordsOutput = getDriversRecordsOutput(driversRecords);
+
+                resolve(driverRecordsOutput);
+            }
+        });
+    });
+};
+
+const sortDrivers = (listOfDrivers, direction, type) => {
     const funcName = {
         dist: "getTotalDistInMiles",
         time: "getTotalTimeInHrs",
@@ -87,6 +70,25 @@ function sortDrivers(listOfDrivers, direction, type) {
             (currDriver, nxtDriver) => nxtDriver[funcName[type]]() + currDriver[funcName[type]]()
         );
     }
-}
+};
 
-export { readFile, createHash, getDriversRecordsOutput, sortDrivers };
+const validateDriverRecords = hashTbl => {
+    let idx = 0;
+    const validRecords = Object.keys(hashTbl).reduce((accumulator, driver) => {
+        const currDriver = hashTbl[driver];
+        const driverAverageSpeed = currDriver.getMilesPerHour();
+        const driverSpeedInRange = driverAverageSpeed >= MIN_SPEED_MPH && driverAverageSpeed <= MAX_SPEED_MPH;
+        const driverDidNotTravel = driverAverageSpeed === 0;
+
+        if (driverSpeedInRange || driverDidNotTravel) {
+            accumulator[idx] = currDriver;
+            idx += 1;
+        }
+
+        return accumulator;
+    }, []);
+
+    return sortDrivers(validRecords, "desc", "dist");
+};
+
+export { createHash, getDriversRecordsOutput, readFile, sortDrivers, validateDriverRecords };
