@@ -6,12 +6,15 @@ module.exports = {
     coveragePathIgnorePatterns: ["./node_modules", "./coverage", "./dist", "./build", "./test", "./*.config.*"],
     coverageThreshold: {
         "./src/": {
-            branches: 100,
-            functions: 100,
-            lines: 100,
-            statements: 100
+            branches: [85, 92],
+            functions: [90, 97],
+            lines: [90, 97],
+            statements: [90, 97]
         }
     },
+    modulePathIgnorePatterns: [
+        "./src/main.js"
+    ],
     notify: true,
     verbose: true
 };
