@@ -3,54 +3,65 @@ import process from "process";
 
 import Driver from "../Driver";
 
-function readRecordsFile() {
-    return new Promise((res, rej) => {
+const MIN_SPEED_MPH = 5;
+const MAX_SPEED_MPH = 100;
+
+function readFile() {
+    return new Promise((resolve, reject) => {
         const driversRecordsFile = process.argv[2];
         fs.readFile(driversRecordsFile, "utf8", (err, data) => {
             if (err) {
-                rej(err);
+                reject(err);
+            } else {
+                const driversRecordsHashTbl = createHash(data);
+                let idx = 0;
+
+                const driversRecords = Object.keys(driversRecordsHashTbl).reduce((accumulator, driver) => {
+                    const currDriver = driversRecordsHashTbl[driver];
+                    const driverAverageSpeed = currDriver.getMilesPerHour();
+                    const driverSpeedInRange =
+                        driverAverageSpeed >= MIN_SPEED_MPH && driverAverageSpeed <= MAX_SPEED_MPH;
+                    const driverDidNotTravel = driverAverageSpeed === 0;
+
+                    if (driverSpeedInRange || driverDidNotTravel) {
+                        accumulator[idx] = currDriver;
+                        idx += 1;
+                    }
+
+                    return accumulator;
+                }, []);
+
+                sortDrivers(driversRecords, "desc", "dist");
+                console.table(driversRecords);
+                let driverRecordsOutput = getDriversRecordsOutput(driversRecords);
+                resolve(driverRecordsOutput);
             }
-
-            const driversRecordsHash = createDriversRecordsHash(data);
-            const driversRecords = [];
-            for (let driver in driversRecordsHash) {
-                const currDriver = getCurrentDriver(driversRecordsHash, driver);
-                const driverAveragedCorrectSpeedLimit =
-                    currDriver.getMilesPerHour() > 4 && currDriver.getMilesPerHour() < 101;
-                const driverDidNotTravel = currDriver.getMilesPerHour() === 0;
-
-                if (driverAveragedCorrectSpeedLimit || driverDidNotTravel) {
-                    driversRecords.push(currDriver);
-                }
-            }
-
-            sortDriversByDistInMilesDescending(driversRecords);
-            let driverRecordsOutput = getDriversRecordsOutput(driversRecords);
-            res(driverRecordsOutput);
         });
     });
 }
 
-function createDriversRecordsHash(driverRecordsFileData) {
-    return driverRecordsFileData.split("\n").reduce((acc, nxt) => {
-        nxt = nxt.split(" ");
-        const [command, driverName, ...rest] = nxt;
+function createHash(fileData) {
+    if (fileData.length == 0) return {};
+
+    const data = fileData.split("\n");
+    const hash = {};
+
+    data.forEach((val) => {
+        const [command, name, ...rest] = val.split(" ");
 
         if (command === "Driver") {
-            acc[driverName] = new Driver(driverName);
+            hash[name] = new Driver(name);
+        } else if (command === "Trip") {
+            const distInMiles = Math.round(Number(rest[2]));
+            hash[name].setTotalDistInMiles(distInMiles);
+            hash[name].setTotalTimeInHrs(rest);
+            hash[name].setMilesPerHour();
         } else {
-            let distInMiles = Math.round(Number(rest[2]));
-            acc[driverName].setTotalDistInMiles(distInMiles);
-            acc[driverName].setTotalTimeInHrs(rest);
-            acc[driverName].setMilesPerHour();
+            throw new Error("Unrecognized command");
         }
+    });
 
-        return acc;
-    }, {});
-}
-
-function getCurrentDriver(driversHash, currDriver) {
-    return driversHash[currDriver];
+    return hash;
 }
 
 function getDriversRecordsOutput(listOfDrivers) {
@@ -60,14 +71,22 @@ function getDriversRecordsOutput(listOfDrivers) {
     }, "");
 }
 
-function sortDriversByDistInMilesDescending(listOfDrivers) {
-    return listOfDrivers.sort((curr, nxt) => nxt.getTotalDistInMiles() - curr.getTotalDistInMiles());
+function sortDrivers(listOfDrivers, direction, type) {
+    const funcName = {
+        dist: "getTotalDistInMiles",
+        time: "getTotalTimeInHrs",
+        mph: "getMilesPerHour"
+    };
+
+    if (direction === "desc") {
+        return listOfDrivers.sort(
+            (currDriver, nxtDriver) => nxtDriver[funcName[type]]() - currDriver[funcName[type]]()
+        );
+    } else if (direction == "asc") {
+        return listOfDrivers.sort(
+            (currDriver, nxtDriver) => nxtDriver[funcName[type]]() + currDriver[funcName[type]]()
+        );
+    }
 }
 
-export {
-    readRecordsFile,
-    createDriversRecordsHash,
-    getCurrentDriver,
-    getDriversRecordsOutput,
-    sortDriversByDistInMilesDescending
-};
+export { readFile, createHash, getDriversRecordsOutput, sortDrivers };
