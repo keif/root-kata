@@ -1,8 +1,8 @@
-import { readFile } from "./utils/utils";
+import { readFile } from "./readFile";
 
-getDriverRecords().then(data => console.log(data));
+processDrivingRecords().then(data => console.table(data));
 
-async function getDriverRecords() {
+async function processDrivingRecords() {
     try {
         return await readFile();
     } catch (error) {

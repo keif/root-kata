@@ -1,4 +1,4 @@
-import Driver from "../Driver";
+import Driver from "./Driver";
 
 const MIN_SPEED_MPH = 5;
 const MAX_SPEED_MPH = 100;
@@ -40,16 +40,14 @@ const sortDrivers = (listOfDrivers, direction, type) => {
         );
     } else if (direction == "asc") {
         return listOfDrivers.sort(
-            (currDriver, nxtDriver) => nxtDriver[funcName[type]]() + currDriver[funcName[type]]()
+            (currDriver, nxtDriver) => currDriver[funcName[type]]() - nxtDriver[funcName[type]]()
         );
     }
 };
 
 const validateDriverRecords = hashTbl => {
     let idx = 0;
-    console.log(Object.keys(hashTbl));
     return Object.keys(hashTbl).reduce((acc, driver) => {
-        console.log(arguments);
         const currDriver = hashTbl[driver];
         const averageSpeed = currDriver.getMilesPerHour();
         const speedInRange = averageSpeed >= MIN_SPEED_MPH && averageSpeed <= MAX_SPEED_MPH;

@@ -1,6 +1,4 @@
-import Driver from "../Driver";
-
-import { createHash, readFile } from "./utils";
+import { createHash } from "./utils";
 
 const hardCodedDriverRecordHash = {
     Alex: {
@@ -23,14 +21,13 @@ const hardCodedDriverRecordHash = {
     }
 };
 
-const hardCodedDriversNotSorted = [new Driver("Dan"), new Driver("Alex"), new Driver("Bob")];
-
-let driverRecordsData = "Driver Dan\n";
-driverRecordsData += "Driver Alex\n";
-driverRecordsData += "Driver Bob\n";
-driverRecordsData += "Trip Dan 07:15 07:45 17.3\n";
-driverRecordsData += "Trip Dan 06:12 06:32 21.8\n";
-driverRecordsData += "Trip Alex 12:01 13:16 42.0";
+let driverRecordsData =
+    `Driver Dan\n` +
+    `Driver Alex\n` +
+    `Driver Bob\n` +
+    `Trip Dan 07:15 07:45 17.3\n` +
+    `Trip Dan 06:12 06:32 21.8\n` +
+    `Trip Alex 12:01 13:16 42.0`;
 
 describe("utils.js", () => {
     describe("createHash method", () => {
@@ -55,6 +52,4 @@ describe("utils.js", () => {
             });
         });
     });
-
-    describe("readFile method", () => {});
 });
