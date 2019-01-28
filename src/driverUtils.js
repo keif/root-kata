@@ -1,5 +1,7 @@
 import Driver from "./Driver";
 
+import { createHash } from "./utils";
+
 const MIN_SPEED_MPH = 5;
 const MAX_SPEED_MPH = 100;
 
@@ -25,6 +27,14 @@ const getDriversRecordsOutput = listOfDrivers => {
         acc += nxt.getRecord() + "\n";
         return acc;
     }, "");
+};
+
+const processDrivingRecords = data => {
+    const hashTbl = createHash(data);
+    const validDriversRecords = validateDriverRecords(hashTbl);
+    sortDrivers(validDriversRecords, "desc", "dist");
+
+    return getDriversRecordsOutput(validDriversRecords);
 };
 
 const sortDrivers = (listOfDrivers, direction, type) => {
@@ -62,4 +72,4 @@ const validateDriverRecords = hashTbl => {
     }, []);
 };
 
-export { getDriversRecordsOutput, setDriverHash, sortDrivers, validateDriverRecords };
+export { getDriversRecordsOutput, processDrivingRecords, setDriverHash, sortDrivers, validateDriverRecords };
