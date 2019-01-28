@@ -1,5 +1,5 @@
 module.exports = {
-    bail: true,
+    bail: false,
     collectCoverageFrom: ["**/*.js", "!**/node_modules/**"],
     collectCoverage: true,
     coverageDirectory: "./coverage",
