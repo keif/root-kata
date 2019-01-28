@@ -1,10 +1,11 @@
 import { readFile } from "./readFile";
+import { processDrivingRecords } from "./driverUtils";
 
-processDrivingRecords().then(data => console.table(data));
+outputDrivingRecords().then(data => console.table(data));
 
-async function processDrivingRecords() {
+async function outputDrivingRecords() {
     try {
-        return await readFile();
+        return await readFile(processDrivingRecords);
     } catch (error) {
         return new Error(error);
     }
