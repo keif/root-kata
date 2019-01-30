@@ -1,7 +1,7 @@
 import process from "process";
 import { readFile } from "./readFile";
 
-jest.mock("./request");
+jest.mock("../core/request");
 
 describe("readFile.js", () => {
     describe("readFile method", () => {

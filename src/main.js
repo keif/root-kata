@@ -1,5 +1,5 @@
-import { readFile } from "./readFile";
-import { processDrivingRecords } from "./driverUtils";
+import { readFile } from "./utility/readFile";
+import { processDrivingRecords } from "./utility/driver";
 
 outputDrivingRecords().then(data => console.table(data));
 

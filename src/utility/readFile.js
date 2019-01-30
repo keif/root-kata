@@ -1,6 +1,6 @@
 import process from "process";
 
-import { request } from "./request";
+import { request } from "../core/request";
 
 const readFile = callback => {
     const file = process.argv[2];

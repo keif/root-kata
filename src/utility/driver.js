@@ -1,9 +1,22 @@
-import Driver from "./Driver";
-
-import { createHash } from "./utils";
+import Driver from "../Driver";
 
 const MIN_SPEED_MPH = 5;
 const MAX_SPEED_MPH = 100;
+
+const createDriverHash = fileData => {
+    if (!fileData || fileData.length == 0) return {};
+
+    const data = fileData.split("\n");
+
+    return data.reduce(setDriverHash, {});
+};
+
+const getDriversRecordsOutput = listOfDrivers => {
+    return listOfDrivers.reduce((acc, nxt) => {
+        acc += nxt.getRecord() + "\n";
+        return acc;
+    }, "");
+};
 
 const setDriverHash = (driverHash, currentValue) => {
     const [command, name, ...rest] = currentValue.split(" ");
@@ -22,15 +35,8 @@ const setDriverHash = (driverHash, currentValue) => {
     return driverHash;
 };
 
-const getDriversRecordsOutput = listOfDrivers => {
-    return listOfDrivers.reduce((acc, nxt) => {
-        acc += nxt.getRecord() + "\n";
-        return acc;
-    }, "");
-};
-
 const processDrivingRecords = data => {
-    const hashTbl = createHash(data, setDriverHash);
+    const hashTbl = createDriverHash(data);
     const validDriversRecords = validateDriverRecords(hashTbl);
     sortDrivers(validDriversRecords, "desc", "dist");
 
@@ -72,4 +78,11 @@ const validateDriverRecords = hashTbl => {
     }, []);
 };
 
-export { getDriversRecordsOutput, processDrivingRecords, setDriverHash, sortDrivers, validateDriverRecords };
+export {
+    createDriverHash,
+    getDriversRecordsOutput,
+    processDrivingRecords,
+    setDriverHash,
+    sortDrivers,
+    validateDriverRecords
+};

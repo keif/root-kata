@@ -1,56 +1,31 @@
 # Root Code Kata
-Describe your approach to solving the problem.
+To solve the problem of taking an input file of data, and processing it to give the desired output.
 
-Email your code to us as a tarball (tar zcvf your-code.tgz your-code-dir) or a gitbundle (GIT_DIR=your-code-dir/.git git bundle create your-code.gitbundle --all). We use GMail for our email at Root, and it will block email attachments of tarballs that contain .jar or .js files. If you implemented your solution in Java or Javascript and are sending us a tarball, please rename the attachment with an arbitrary extension (e.g. your-code.tarball) to get it through GMail's filters.
+##Chosen language
+To keep it simple, I chose JavaScript (utilizing node, npm, es6, and webpack). The code takes an input text file to generate the output in the command line - in my example, the data file is present in `src/data` and output in `build/`. 
 
-##Problem Statement
+The code was written utilizing node v11.6.0 and npm v6.5.0-next.0 - as this is a more simple code example, I didn't run through various node/npm combinations (under the assumption that these versions would match what is on the server). The _need_ for these versions is highlighted by the use of `async`/`await` - it will [fail on node versions earlier than](https://www.infoq.com/news/2017/02/node-76-async-await/) `v7.6`.
 
-The code will process an input file. In my case, utilizing `node` using webpack and fs.
+##To Execute the Code Example
+From the main directory, the code is compiled via `webpack` (alternatively, `npm run build`) - this generates our `build` directory.
 
-Execution by node `main.js /path/to/input.txt`
+Inside the build directory, we can execute `node main.js data.txt` to execute against the example file.
 
-Two Commands:
-Driver
-Trip
+##What it needed to handle
+We needed to pay attention for two Commands: Driver & Trip (in this example, they appear as the first word).
 
-###Driver
-Registers a Driver
+*Driver* registers a Driver
+*Trip*  registers an associated trip
 
-###Trip
-Registers a trip
+For generating the data, we needed to discard any trips that average a speed of less than 5 mph or greater than 100 mph - this was simple JavaScript to verify the speed met our range.
 
-NOTES:
-Discard any trips that average a speed of less than 5 mph or greater than 100 mph.
+###What I used to build this out:
+I develop primarilly on mac - Windows is coming along with `bash` being included, but Mac still is the easiest to test Windows and Apple browsers (and compiling iOS apps).
 
-Generate a report containing each driver with total miles driven and average speed.
+I utilize `nvm` ([node version manager](https://github.com/creationix/nvm) on my machines so I can switch node versions more easily, to avoid the issue of "this project needed node `v6.9.1`, but other code is more modern and needs to be updated to a stable branch."
 
-Sort the output by most miles driven to least.
+[Webpack](https://webpack.js.org/) was chosen to quickly spin up the output of JavaScript (combined with a little configuration to copy the data file, and compress the JavaScript). es6 was utilized to use "the latest and greatest" of writing shorthand JS, which we then utilize babel to transpile it.
 
-Round miles and miles per hour to the nearest integer.
+UnitTests were written in [Jest](https://jestjs.io/) - including utilizing some snapshots, and I didn't hit 100% coverage. This is a topic developers can wax philosophically about, depending on the rigidity of your tests where every line is covered, or are use-case driven. I played around with TDD at first, but lost track of myself and ended up with some tests focused on the actual task at hand (wanting the data sorted a certain way, whereas the function was written to be more flexible). In going through the tests, I could've written more false checks to handle the "bad" scenarios, but I aimed for hitting the main "happy path" and likely error ("you didn't pass a file", for example). SnapShots were used to help generate the main object for comparison so if the object updates, we can compare them to the original object. I did not cover the `request.js` as it is code node code - if `fs` fails, or `new Promise` fails at this level of the module, it would indicate a bigger problem (possibly an incorrect node version if someone overrides the `package.json`) that unit testing "core code works like core code should."
 
-Example input:
-
-Driver Dan
-Driver Alex
-Driver Bob
-Trip Dan 07:15 07:45 17.3
-Trip Dan 06:12 06:32 21.8
-Trip Alex 12:01 13:16 42.0
-
-Expected output:
-
-Alex: 42 miles @ 34 mph
-Dan: 39 miles @ 47 mph
-Bob: 0 miles
-
-### To Execute
-
-From the build directory:
-Do to the use of `async` you need a node version no earlier than `v7.6`.
-
-To match my build environment, you'll need `v11.6.0`
-
-If you require an earlier build of Node.JS I do recommend Node Version Manager to switch between node versions.
-
-This project was build with the "stable" branch of node 
-`node main.js data.txt`
+i.e. you wouldn't utilize jQuery and then write unit tests to be sure jQuery works - if jQuery isn't present, that test just fail spectacularly to highlight "there's a bigger problem here" (personal opinions of usage of jQuery set aside, mind you).

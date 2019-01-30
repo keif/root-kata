@@ -4,7 +4,7 @@ import {
     driversSorted,
     driversSortedArrayDesc,
     driversSortedArrayAsc
-} from "./drivers";
+} from "../../__mocks__/drivers";
 
 const request = () => {
     return new Promise((resolve, reject) => {

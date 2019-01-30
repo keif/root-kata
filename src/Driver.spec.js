@@ -8,6 +8,10 @@ beforeAll(() => {
 });
 
 describe("Driver Class", () => {
+    test("generates a driver object", () => {
+        expect(driver).toMatchSnapshot();
+    });
+
     test('create a new driver with the name "Dan"', () => {
         expect(driver.getName()).toEqual("Dan");
     });

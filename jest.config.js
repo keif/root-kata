@@ -12,7 +12,7 @@ module.exports = {
             statements: [90, 97]
         }
     },
-    modulePathIgnorePatterns: ["./src/main.js"],
+    modulePathIgnorePatterns: ["./src/main.js", "./src/core/*"],
     notify: true,
     verbose: true
 };

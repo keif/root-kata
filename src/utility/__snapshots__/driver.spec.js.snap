@@ -1,0 +1,94 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`utility/driver.js createDriverHash method with data passed and the data is valid returns a hash map of drivers 1`] = `
+Object {
+  "Alex": Driver {
+    "_driverName": "Alex",
+    "_drivingTimeHours": 1.25,
+    "_milesDriven": 42,
+    "_milesPerHour": 34,
+  },
+  "Bob": Driver {
+    "_driverName": "Bob",
+    "_drivingTimeHours": 0,
+    "_milesDriven": 0,
+    "_milesPerHour": 0,
+  },
+  "Dan": Driver {
+    "_driverName": "Dan",
+    "_drivingTimeHours": 0.833333333333333,
+    "_milesDriven": 39,
+    "_milesPerHour": 47,
+  },
+}
+`;
+
+exports[`utility/driver.js getDriversRecordsOutput method returns output of each drivers travel experiences 1`] = `
+"Dan: 17.3 miles @ 35 mph
+Alex: 42 miles @ 126 mph
+Bob: 0 miles
+"
+`;
+
+exports[`utility/driver.js sortDrivers method returns a list of drivers sorted ascending or descending, by distance, miles, or mph sortDrivers('asc', 'dist') 1`] = `
+Array [
+  Object {
+    "_driverName": "Bob",
+    "_drivingTimeHours": 0,
+    "_milesDriven": 0,
+    "_milesPerHour": 0,
+  },
+  Object {
+    "_driverName": "Dan",
+    "_drivingTimeHours": 0.833333333333333,
+    "_milesDriven": 39,
+    "_milesPerHour": 47,
+  },
+  Object {
+    "_driverName": "Alex",
+    "_drivingTimeHours": 1.25,
+    "_milesDriven": 42,
+    "_milesPerHour": 34,
+  },
+]
+`;
+
+exports[`utility/driver.js sortDrivers method returns a list of drivers sorted ascending or descending, by distance, miles, or mph sortDrivers('desc', 'dist') 1`] = `
+Array [
+  Object {
+    "_driverName": "Alex",
+    "_drivingTimeHours": 1.25,
+    "_milesDriven": 42,
+    "_milesPerHour": 34,
+  },
+  Object {
+    "_driverName": "Dan",
+    "_drivingTimeHours": 0.833333333333333,
+    "_milesDriven": 39,
+    "_milesPerHour": 47,
+  },
+  Object {
+    "_driverName": "Bob",
+    "_drivingTimeHours": 0,
+    "_milesDriven": 0,
+    "_milesPerHour": 0,
+  },
+]
+`;
+
+exports[`utility/driver.js validateDriverRecords method takes a hash table and returns the drivers that meet the criteria 1`] = `
+Array [
+  Driver {
+    "_driverName": "Dan",
+    "_drivingTimeHours": 0.5,
+    "_milesDriven": 17.3,
+    "_milesPerHour": 35,
+  },
+  Driver {
+    "_driverName": "Bob",
+    "_drivingTimeHours": 1.25,
+    "_milesDriven": 0,
+    "_milesPerHour": 0,
+  },
+]
+`;

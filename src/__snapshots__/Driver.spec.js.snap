@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Driver Class snapshot 1`] = `
+exports[`Driver Class generates a driver object 1`] = `
 Driver {
   "_driverName": "Dan",
   "_drivingTimeHours": 0,
