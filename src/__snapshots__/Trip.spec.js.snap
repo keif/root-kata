@@ -1,0 +1,10 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Trip Class generates a trip object 1`] = `
+Trip {
+  "_duration": 0.5,
+  "_endTime": "07:45",
+  "_startTime": "07:15",
+  "_totalMilesDriven": 17.3,
+}
+`;
