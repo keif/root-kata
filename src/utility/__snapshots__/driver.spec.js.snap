@@ -3,29 +3,52 @@
 exports[`utility/driver.js createDriverHash method with data passed and the data is valid returns a hash map of drivers 1`] = `
 Object {
   "Alex": Driver {
+    "_averageSpeed": 34,
     "_driverName": "Alex",
-    "_drivingTimeHours": 1.25,
-    "_milesDriven": 42,
-    "_milesPerHour": 34,
+    "_totalDrivingTime": 1.25,
+    "_totalMilesDriven": 42,
+    "_trips": Array [
+      Trip {
+        "_duration": 1.25,
+        "_endTime": "13:16",
+        "_startTime": "12:01",
+        "_totalMilesDriven": 42,
+      },
+    ],
   },
   "Bob": Driver {
+    "_averageSpeed": 0,
     "_driverName": "Bob",
-    "_drivingTimeHours": 0,
-    "_milesDriven": 0,
-    "_milesPerHour": 0,
+    "_totalDrivingTime": 0,
+    "_totalMilesDriven": 0,
+    "_trips": Array [],
   },
   "Dan": Driver {
+    "_averageSpeed": 47,
     "_driverName": "Dan",
-    "_drivingTimeHours": 0.833333333333333,
-    "_milesDriven": 39,
-    "_milesPerHour": 47,
+    "_totalDrivingTime": 0.833333333333333,
+    "_totalMilesDriven": 39.1,
+    "_trips": Array [
+      Trip {
+        "_duration": 0.5,
+        "_endTime": "07:45",
+        "_startTime": "07:15",
+        "_totalMilesDriven": 17.3,
+      },
+      Trip {
+        "_duration": 0.33333333333333304,
+        "_endTime": "06:32",
+        "_startTime": "06:12",
+        "_totalMilesDriven": 21.8,
+      },
+    ],
   },
 }
 `;
 
 exports[`utility/driver.js getDriversRecordsOutput method returns output of each drivers travel experiences 1`] = `
-"Dan: 17.3 miles @ 35 mph
-Alex: 42 miles @ 126 mph
+"Dan: 17.3 miles @ NaN mph
+Alex: 42 miles @ NaN mph
 Bob: 0 miles
 "
 `;
@@ -33,22 +56,45 @@ Bob: 0 miles
 exports[`utility/driver.js sortDrivers method returns a list of drivers sorted ascending or descending, by distance, miles, or mph sortDrivers('asc', 'dist') 1`] = `
 Array [
   Object {
-    "_driverName": "Bob",
-    "_drivingTimeHours": 0,
-    "_milesDriven": 0,
-    "_milesPerHour": 0,
-  },
-  Object {
-    "_driverName": "Dan",
-    "_drivingTimeHours": 0.833333333333333,
-    "_milesDriven": 39,
-    "_milesPerHour": 47,
-  },
-  Object {
+    "_averageSpeed": 34,
     "_driverName": "Alex",
-    "_drivingTimeHours": 1.25,
-    "_milesDriven": 42,
-    "_milesPerHour": 34,
+    "_totalDrivingTime": 1.25,
+    "_totalMilesDriven": 42,
+    "_trips": Array [
+      Object {
+        "_duration": 1.25,
+        "_endTime": "13:16",
+        "_startTime": "12:01",
+        "_totalMilesDriven": 42,
+      },
+    ],
+  },
+  Object {
+    "_averageSpeed": 47,
+    "_driverName": "Dan",
+    "_totalDrivingTime": 0.833333333333333,
+    "_totalMilesDriven": 39.1,
+    "_trips": Array [
+      Object {
+        "_duration": 0.5,
+        "_endTime": "07:45",
+        "_startTime": "07:15",
+        "_totalMilesDriven": 17.3,
+      },
+      Object {
+        "_duration": 0.33333333333333304,
+        "_endTime": "06:32",
+        "_startTime": "06:12",
+        "_totalMilesDriven": 21.8,
+      },
+    ],
+  },
+  Object {
+    "_averageSpeed": 0,
+    "_driverName": "Bob",
+    "_totalDrivingTime": 0,
+    "_totalMilesDriven": 0,
+    "_trips": Array [],
   },
 ]
 `;
@@ -56,39 +102,47 @@ Array [
 exports[`utility/driver.js sortDrivers method returns a list of drivers sorted ascending or descending, by distance, miles, or mph sortDrivers('desc', 'dist') 1`] = `
 Array [
   Object {
+    "_averageSpeed": 34,
     "_driverName": "Alex",
-    "_drivingTimeHours": 1.25,
-    "_milesDriven": 42,
-    "_milesPerHour": 34,
+    "_totalDrivingTime": 1.25,
+    "_totalMilesDriven": 42,
+    "_trips": Array [
+      Object {
+        "_duration": 1.25,
+        "_endTime": "13:16",
+        "_startTime": "12:01",
+        "_totalMilesDriven": 42,
+      },
+    ],
   },
   Object {
+    "_averageSpeed": 47,
     "_driverName": "Dan",
-    "_drivingTimeHours": 0.833333333333333,
-    "_milesDriven": 39,
-    "_milesPerHour": 47,
+    "_totalDrivingTime": 0.833333333333333,
+    "_totalMilesDriven": 39.1,
+    "_trips": Array [
+      Object {
+        "_duration": 0.5,
+        "_endTime": "07:45",
+        "_startTime": "07:15",
+        "_totalMilesDriven": 17.3,
+      },
+      Object {
+        "_duration": 0.33333333333333304,
+        "_endTime": "06:32",
+        "_startTime": "06:12",
+        "_totalMilesDriven": 21.8,
+      },
+    ],
   },
   Object {
+    "_averageSpeed": 0,
     "_driverName": "Bob",
-    "_drivingTimeHours": 0,
-    "_milesDriven": 0,
-    "_milesPerHour": 0,
+    "_totalDrivingTime": 0,
+    "_totalMilesDriven": 0,
+    "_trips": Array [],
   },
 ]
 `;
 
-exports[`utility/driver.js validateDriverRecords method takes a hash table and returns the drivers that meet the criteria 1`] = `
-Array [
-  Driver {
-    "_driverName": "Dan",
-    "_drivingTimeHours": 0.5,
-    "_milesDriven": 17.3,
-    "_milesPerHour": 35,
-  },
-  Driver {
-    "_driverName": "Bob",
-    "_drivingTimeHours": 1.25,
-    "_milesDriven": 0,
-    "_milesPerHour": 0,
-  },
-]
-`;
+exports[`utility/driver.js validateDriverRecords method takes a hash table and returns the drivers that meet the criteria 1`] = `Array []`;

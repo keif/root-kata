@@ -1,63 +1,72 @@
+import Trip from "./Trip";
+
+const MIN_SPEED_MPH = 5;
+const MAX_SPEED_MPH = 100;
+
 class Driver {
     constructor(driverName) {
         this._driverName = driverName;
-        this._drivingTimeHours = 0;
-        this._milesDriven = 0;
-        this._milesPerHour = 0;
-    }
-
-    _calcTotalTimeInHrs(drivingTimes) {
-        const { startHour, startMin, endHour, endMin } = drivingTimes;
-        return endHour + endMin / 60 - (startHour + startMin / 60);
-    }
-
-    _convertTimeToNumber(drivingTimes) {
-        return drivingTimes.split(":").map(num => Number(num));
+        this._totalDrivingTime = 0;
+        this._totalMilesDriven = 0;
+        this._averageSpeed = 0;
+        this._trips = [];
     }
 
     getName() {
         return this._driverName;
     }
 
-    getMilesPerHour() {
-        return this._milesPerHour;
+    getTotalDriveTime() {
+        return this._totalDrivingTime;
     }
 
-    setMilesPerHour() {
-        this._milesPerHour = Math.round(this._milesDriven / this._drivingTimeHours);
+    setTotalDriveTime(drivingTime) {
+        this._totalDrivingTime += drivingTime;
     }
 
-    getTotalDistInMiles() {
-        return this._milesDriven;
+    getAverageSpeed() {
+        return this._averageSpeed;
     }
 
-    setTotalDistInMiles(distInMiles) {
-        this._milesDriven += distInMiles;
-        return this._milesDriven;
+    setAverageSpeed() {
+        this._averageSpeed = Math.round(this._totalMilesDriven / this._totalDrivingTime);
     }
 
-    getTotalTimeInHrs() {
-        return this._drivingTimeHours;
+    getTotalDrivingDist() {
+        return this._totalMilesDriven;
     }
 
-    setTotalTimeInHrs(drivingTime) {
-        const [startTime, endTime, ..._rest] = drivingTime;
-        const [startHour, startMin] = this._convertTimeToNumber(startTime);
-        const [endHour, endMin] = this._convertTimeToNumber(endTime);
-        const drivingTimes = { startHour, startMin, endHour, endMin };
-        this._drivingTimeHours += this._calcTotalTimeInHrs(drivingTimes);
+    setTotalDrivingDist(distInMiles) {
+        this._totalMilesDriven += distInMiles;
+        return this._totalMilesDriven;
     }
 
     getRecord() {
-        let driverDescription = `${this._driverName}: ${this._milesDriven} miles`;
+        let driverDescription = `${this._driverName}: ${this._totalMilesDriven} miles`;
 
-        const driverHasTraveled = this._milesDriven;
+        const driverHasTraveled = this._totalMilesDriven;
         if (driverHasTraveled) {
-            driverDescription += ` @ ${this._milesPerHour} mph`;
+            driverDescription += ` @ ${this._averageSpeed} mph`;
         }
 
         return driverDescription;
     }
+
+    addTrip(...tripDetails) {
+        const trip = new Trip(...tripDetails);
+        const tripSpeed = trip.getAverageSpeed();
+        const speedAboveMin = tripSpeed >= MIN_SPEED_MPH;
+        const speedBelowMax = tripSpeed <= MAX_SPEED_MPH;
+
+        if (speedAboveMin && speedBelowMax) {
+            this._trips.push(trip);
+
+            this.setTotalDrivingDist(trip.getMilesDriven());
+            this.setTotalDriveTime(trip.getDuration());
+            this.setAverageSpeed();
+        }
+    }
+
 }
 
 export default Driver;

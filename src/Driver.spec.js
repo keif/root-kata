@@ -1,42 +1,83 @@
 import Driver from "./Driver";
+import Trip from "./Trip";
+import { driverRecordsData } from "./__mocks__/drivers";
 
 let driver;
-
-beforeAll(() => {
-    let driverName = "Dan";
-    driver = new Driver(driverName);
-});
+let driverName = "Dan";
 
 describe("Driver Class", () => {
+    beforeEach(() => {
+        driver = new Driver(driverName);
+    });
+
     test("generates a driver object", () => {
         expect(driver).toMatchSnapshot();
     });
 
-    test('create a new driver with the name "Dan"', () => {
-        expect(driver.getName()).toEqual("Dan");
+    test("getName returns the name of the driver set via constructor", () => {
+        expect(driver.getName()).toMatch("Dan");
     });
 
-    test("should set Drivers driving time hours to 0.5", () => {
-        driver.setTotalTimeInHrs(["07:15", "07:45"]);
-        const driversTimeInHrs = driver.getTotalTimeInHrs();
-        expect(driversTimeInHrs).toEqual(0.5);
+    describe("getTotalDriveTime returns the total drive time from setTotalDriveTime", () => {
+        beforeEach(() => {
+            driver.setTotalDriveTime(0.25);
+        });
+
+        test("when first set, it returns the passed in driving time", () => {    
+            expect(driver.getTotalDriveTime()).toEqual(0.25);
+        });
+    
+        test("should increase a pre-existing Drivers' driving time", () => {
+            driver.setTotalDriveTime(0.25);
+    
+            expect(driver.getTotalDriveTime()).toEqual(0.5);
+        });
     });
 
-    test("should set Drivers distance in miles to 10", () => {
-        driver.setTotalDistInMiles(10);
-        const driversDistInMiles = driver.getTotalDistInMiles();
-        expect(driversDistInMiles).toEqual(10);
+    test("getTotalDrivingDist returns the Drivers' distance from setTotalDrivingDist", () => {
+        driver.setTotalDrivingDist(10);
+
+        expect(driver.getTotalDrivingDist()).toEqual(10);
     });
 
-    test("should set drivers speed to 20", () => {
-        driver.setMilesPerHour();
-        const driversSpeed = driver.getMilesPerHour();
-        expect(driversSpeed).toEqual(20);
+    describe("getAverageSpeed uses the drive time and distance", () => {
+        beforeEach(() => {
+            driver.setTotalDriveTime(0.5);
+            driver.setTotalDrivingDist(10);
+        });
+
+        test("to return from setAverageSpeed", () => {
+            driver.setAverageSpeed();
+    
+            expect(driver.getAverageSpeed()).toEqual(20);
+        });
     });
 
-    test("should return a long descriptive string about the driver", () => {
-        const driverDescription = driver.getRecord();
-        const expectedDescription = "Dan: 10 miles @ 20 mph";
-        expect(driverDescription).toEqual(expectedDescription);
+    describe("getRecord uses the drive time, distance, and average speed", () => {
+        test("returns a long descriptive string about the driver", () => {
+            driver.setTotalDriveTime(0.5);
+            driver.setTotalDrivingDist(10);
+            driver.setAverageSpeed();
+    
+            expect(driver.getRecord()).toMatch("Dan: 10 miles @ 20 mph");
+        });
+    });
+
+    describe("addTrip takes trip details to deterimine if a trip should be added to the Driver", () => {
+        describe("when given a trip", () => {
+            test("it is added if it falls between the minimum and maximum speed", () => {
+                driver.addTrip(..."07:15 07:45 17.3".split(" "));
+                driver.addTrip(..."06:12 06:32 21.8".split(" "));
+
+                expect(driver.getRecord()).toMatch("Dan: 39.1 miles @ 47 mph");
+            });            
+
+            test("it is NOT added if it falls outside the minimum and maximum speed", () => {
+                driver.addTrip(..."00:01 08:59 1000.0".split(" "));
+                driver.addTrip(..."00:01 01:02 1.0".split(" "));
+
+                expect(driver.getRecord()).toMatch("Dan: 0 miles");
+            });            
+        });
     });
 });
