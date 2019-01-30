@@ -30,7 +30,7 @@ const getDriversRecordsOutput = listOfDrivers => {
 };
 
 const processDrivingRecords = data => {
-    const hashTbl = createHash(data);
+    const hashTbl = createHash(data, setDriverHash);
     const validDriversRecords = validateDriverRecords(hashTbl);
     sortDrivers(validDriversRecords, "desc", "dist");
 
@@ -46,11 +46,11 @@ const sortDrivers = (listOfDrivers, direction, type) => {
 
     if (direction === "desc") {
         return listOfDrivers.sort(
-            (currDriver, nxtDriver) => nxtDriver[funcName[type]]() - currDriver[funcName[type]]()
+            (currDriver, nextDriver) => nextDriver[funcName[type]]() - currDriver[funcName[type]]()
         );
     } else if (direction == "asc") {
         return listOfDrivers.sort(
-            (currDriver, nxtDriver) => currDriver[funcName[type]]() - nxtDriver[funcName[type]]()
+            (currDriver, nextDriver) => currDriver[funcName[type]]() - nextDriver[funcName[type]]()
         );
     }
 };
