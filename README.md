@@ -1,5 +1,7 @@
 # Root Code Kata
 
+[![NPM version](https://badge.fury.io/js/badge-list.svg)](http://badge.fury.io/js/badge-list)
+
 To solve the problem of taking an input file of data, and processing it to give the desired output.
 
 ## Getting Started
@@ -9,8 +11,9 @@ To keep it simple, I chose JavaScript (utilizing node, npm, es6, and webpack). T
 ### What it needed to handle
 We needed to pay attention for two Commands: Driver & Trip (in this example, they appear as the first word).
 
-*Driver* registers a Driver
-*Trip*  registers an associated trip
+**Driver** registers a Driver
+
+**Trip**  registers an associated trip
 
 For generating the data, we needed to discard any trips that average a speed of less than 5 mph or greater than 100 mph - this was simple JavaScript to verify the speed met our range.
 
@@ -50,7 +53,15 @@ or alternatively:
 npm run test
 ```
 
-### What I used to build this out:
+### Built With:
+
+* Macbook Pro
+* [VSCode](https://code.visualstudio.com/) - I converted from Sublime Text.
+* [NVM](https://github.com/creationix/nvm) - Node Version Manager, to allow multiple versions of node to be installed.
+* [Webpack](https://webpack.js.org/) - handles the build.
+* [Jest](https://jestjs.io/) - for unit testing (I primarilly use Jasmine, but this was a fun test to compare).
+
+## Final Write-up:
 
 I develop primarilly on mac - Windows is coming along with `bash` being included, but Mac still is the easiest to test Windows and Apple browsers (and compiling iOS apps).
 
