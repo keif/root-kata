@@ -1,0 +1,10 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Driver Class snapshot 1`] = `
+Driver {
+  "_driverName": "Dan",
+  "_drivingTimeHours": 0,
+  "_milesDriven": 0,
+  "_milesPerHour": 0,
+}
+`;
