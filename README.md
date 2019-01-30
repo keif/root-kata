@@ -53,6 +53,11 @@ or alternatively:
 npm run test
 ```
 
+Coverage is available to be seen (to see what lines were not covered by tests) by visiting the output coverage after completing `jest`:
+```
+file:///path/to/root-kata/coverage/lcov-report/index.html
+```
+
 ### Built With:
 
 * Macbook Pro
