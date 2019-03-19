@@ -9,7 +9,6 @@ Object {
     "_totalMilesDriven": 42,
     "_trips": Array [
       Trip {
-        "_duration": 1.25,
         "_endTime": "13:16",
         "_startTime": "12:01",
         "_totalMilesDriven": 42,
@@ -30,13 +29,11 @@ Object {
     "_totalMilesDriven": 39.1,
     "_trips": Array [
       Trip {
-        "_duration": 0.5,
         "_endTime": "07:45",
         "_startTime": "07:15",
         "_totalMilesDriven": 17.3,
       },
       Trip {
-        "_duration": 0.33333333333333304,
         "_endTime": "06:32",
         "_startTime": "06:12",
         "_totalMilesDriven": 21.8,
@@ -62,7 +59,6 @@ Array [
     "_totalMilesDriven": 42,
     "_trips": Array [
       Object {
-        "_duration": 1.25,
         "_endTime": "13:16",
         "_startTime": "12:01",
         "_totalMilesDriven": 42,
@@ -76,13 +72,11 @@ Array [
     "_totalMilesDriven": 39.1,
     "_trips": Array [
       Object {
-        "_duration": 0.5,
         "_endTime": "07:45",
         "_startTime": "07:15",
         "_totalMilesDriven": 17.3,
       },
       Object {
-        "_duration": 0.33333333333333304,
         "_endTime": "06:32",
         "_startTime": "06:12",
         "_totalMilesDriven": 21.8,
@@ -108,7 +102,6 @@ Array [
     "_totalMilesDriven": 42,
     "_trips": Array [
       Object {
-        "_duration": 1.25,
         "_endTime": "13:16",
         "_startTime": "12:01",
         "_totalMilesDriven": 42,
@@ -122,13 +115,11 @@ Array [
     "_totalMilesDriven": 39.1,
     "_trips": Array [
       Object {
-        "_duration": 0.5,
         "_endTime": "07:45",
         "_startTime": "07:15",
         "_totalMilesDriven": 17.3,
       },
       Object {
-        "_duration": 0.33333333333333304,
         "_endTime": "06:32",
         "_startTime": "06:12",
         "_totalMilesDriven": 21.8,

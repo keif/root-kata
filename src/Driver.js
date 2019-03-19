@@ -1,14 +1,14 @@
 import Trip from "./Trip";
 
-const MIN_SPEED_MPH = 5;
+const HIGHWAY_SPEED = 50;
 const MAX_SPEED_MPH = 100;
+const MIN_SPEED_MPH = 5;
 
 class Driver {
     constructor(driverName) {
         this._driverName = driverName;
         this._totalDrivingTime = 0;
         this._totalMilesDriven = 0;
-        this._averageSpeed = 0;
         this._trips = [];
     }
 
@@ -25,11 +25,7 @@ class Driver {
     }
 
     getAverageSpeed() {
-        return this._averageSpeed;
-    }
-
-    setAverageSpeed() {
-        this._averageSpeed = Math.round(this._totalMilesDriven / this._totalDrivingTime);
+        return Math.round(this._totalMilesDriven / this._totalDrivingTime);
     }
 
     getTotalDrivingDist() {
@@ -41,13 +37,21 @@ class Driver {
         return this._totalMilesDriven;
     }
 
+    getPercentageHighway() {
+        let highwayMiles = this._trips
+            .filter(trip => trip.getAverageSpeed() >= HIGHWAY_SPEED)
+            .reduce((acc, trip) => acc + trip.getMilesDriven(), 0);
+
+        return highwayMiles / this._totalMilesDriven || 0;
+    }
+
     getRecord() {
         let driverDescription = `${this._driverName}: ${this._totalMilesDriven} miles`;
 
-        const driverHasTraveled = this._totalMilesDriven;
-        if (driverHasTraveled) {
-            driverDescription += ` @ ${this._averageSpeed} mph`;
+        if (this._totalMilesDriven) {
+            driverDescription += ` @ ${this.getAverageSpeed()} mph`;
         }
+        driverDescription += ` ${this.getPercentageHighway() * 100}% highway`;
 
         return driverDescription;
     }
@@ -63,10 +67,8 @@ class Driver {
 
             this.setTotalDrivingDist(trip.getMilesDriven());
             this.setTotalDriveTime(trip.getDuration());
-            this.setAverageSpeed();
         }
     }
-
 }
 
 export default Driver;

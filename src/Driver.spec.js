@@ -40,16 +40,17 @@ describe("Driver Class", () => {
         expect(driver.getTotalDrivingDist()).toEqual(10);
     });
 
-    describe("getAverageSpeed uses the drive time and distance", () => {
-        beforeEach(() => {
-            driver.setTotalDriveTime(0.5);
-            driver.setTotalDrivingDist(10);
+    describe("getPercentageHighway uses the passed in trips to determine the percentage of highway miles of the total miles driven", () => {
+        test("if the trip does not constitute highway driving", () => {
+            driver.addTrip(..."07:00 08:00 49".split(" "));
+
+            expect(driver.getPercentageHighway()).toEqual(0);
         });
 
-        test("to return from setAverageSpeed", () => {
-            driver.setAverageSpeed();
-    
-            expect(driver.getAverageSpeed()).toEqual(20);
+        test("if the trip does constitute highway driving", () => {
+            driver.addTrip(..."07:00 08:00 50".split(" "));
+
+            expect(driver.getPercentageHighway()).toEqual(1);
         });
     });
 
@@ -57,7 +58,6 @@ describe("Driver Class", () => {
         test("returns a long descriptive string about the driver", () => {
             driver.setTotalDriveTime(0.5);
             driver.setTotalDrivingDist(10);
-            driver.setAverageSpeed();
     
             expect(driver.getRecord()).toMatch("Dan: 10 miles @ 20 mph");
         });
