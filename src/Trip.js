@@ -26,10 +26,6 @@ class Trip {
         return this._calcTotalTime();
     }    
 
-    getIsHighway() {
-        return this.getAverageSpeed() >= HIGHWAY_SPEED;
-    }
-
     getMilesDriven() {
         return this._totalMilesDriven;
     }
