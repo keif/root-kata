@@ -5,7 +5,6 @@ class Trip {
         this._startTime = startTime;
         this._endTime = endTime;
         this._totalMilesDriven = Number(milesDriven);
-        this._duration = this._calcTotalTime();
     }
 
     _calcTotalTime() {
@@ -19,12 +18,16 @@ class Trip {
         return drivingTimes.split(":").map(num => Number(num));
     }
 
-    getDuration() {
-        return this._duration;
+    getAverageSpeed() {
+        return Math.round(this._totalMilesDriven / this.getDuration());
     }
 
-    getAverageSpeed() {
-        return Math.round(this._totalMilesDriven / this._duration);
+    getDuration() {
+        return this._calcTotalTime();
+    }    
+
+    getIsHighway() {
+        return this.getAverageSpeed() >= HIGHWAY_SPEED;
     }
 
     getMilesDriven() {
