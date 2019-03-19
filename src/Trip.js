@@ -33,10 +33,6 @@ class Trip {
     getMilesDriven() {
         return this._totalMilesDriven;
     }
-
-    getIsHighway() {
-        return this.getAverageSpeed() >= HIGHWAY_SPEED;
-    }
 }
 
 export default Trip;
