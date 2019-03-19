@@ -1,3 +1,5 @@
+const HIGHWAY_SPEED = 50;
+
 class Trip {
     constructor(startTime, endTime, milesDriven) {
         this._startTime = startTime;
@@ -27,6 +29,10 @@ class Trip {
 
     getMilesDriven() {
         return this._totalMilesDriven;
+    }
+
+    getIsHighway() {
+        return this.getAverageSpeed() >= HIGHWAY_SPEED;
     }
 }
 

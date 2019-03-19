@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Trip Class generates a trip object 1`] = `
+exports[`Trip Class with a given valid trip generates a trip object 1`] = `
 Trip {
   "_duration": 0.5,
   "_endTime": "07:45",
