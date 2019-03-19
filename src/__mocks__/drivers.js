@@ -37,7 +37,6 @@ const driversNotSorted = [new Driver("Dan"), new Driver("Alex"), new Driver("Bob
 driversNotSorted.forEach((driver, idx) => {
     driver.setTotalDriveTime(driveTimes[idx]);
     driver.setTotalDrivingDist(driveDist[idx]);
-    driver.setAverageSpeed();
 });
 
 const driversSorted = [new Driver("Dan"), new Driver("Bob")];
@@ -45,7 +44,6 @@ driversSorted.forEach(driver => {
     let idx = driver._driverName === "Bob" ? 2 : 0;
     driver.setTotalDriveTime(driveTimes[idx]);
     driver.setTotalDrivingDist(driveDist[idx]);
-    driver.setAverageSpeed();
 });
 
 const driversSortedArrayDesc = [

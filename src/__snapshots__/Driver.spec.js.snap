@@ -2,7 +2,6 @@
 
 exports[`Driver Class generates a driver object 1`] = `
 Driver {
-  "_averageSpeed": 0,
   "_driverName": "Dan",
   "_totalDrivingTime": 0,
   "_totalMilesDriven": 0,

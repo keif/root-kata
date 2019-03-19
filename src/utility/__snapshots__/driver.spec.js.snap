@@ -3,7 +3,6 @@
 exports[`utility/driver.js createDriverHash method with data passed and the data is valid returns a hash map of drivers 1`] = `
 Object {
   "Alex": Driver {
-    "_averageSpeed": 34,
     "_driverName": "Alex",
     "_totalDrivingTime": 1.25,
     "_totalMilesDriven": 42,
@@ -16,14 +15,12 @@ Object {
     ],
   },
   "Bob": Driver {
-    "_averageSpeed": 0,
     "_driverName": "Bob",
     "_totalDrivingTime": 0,
     "_totalMilesDriven": 0,
     "_trips": Array [],
   },
   "Dan": Driver {
-    "_averageSpeed": 47,
     "_driverName": "Dan",
     "_totalDrivingTime": 0.833333333333333,
     "_totalMilesDriven": 39.1,
@@ -44,16 +41,15 @@ Object {
 `;
 
 exports[`utility/driver.js getDriversRecordsOutput method returns output of each drivers travel experiences 1`] = `
-"Dan: 17.3 miles @ NaN mph
-Alex: 42 miles @ NaN mph
-Bob: 0 miles
+"Dan: 17.3 miles @ NaN mph 0% highway
+Alex: 42 miles @ NaN mph 0% highway
+Bob: 0 miles 0% highway
 "
 `;
 
 exports[`utility/driver.js sortDrivers method returns a list of drivers sorted ascending or descending, by distance, miles, or mph sortDrivers('asc', 'dist') 1`] = `
 Array [
   Object {
-    "_averageSpeed": 34,
     "_driverName": "Alex",
     "_totalDrivingTime": 1.25,
     "_totalMilesDriven": 42,
@@ -66,7 +62,6 @@ Array [
     ],
   },
   Object {
-    "_averageSpeed": 47,
     "_driverName": "Dan",
     "_totalDrivingTime": 0.833333333333333,
     "_totalMilesDriven": 39.1,
@@ -82,13 +77,6 @@ Array [
         "_totalMilesDriven": 21.8,
       },
     ],
-  },
-  Object {
-    "_averageSpeed": 0,
-    "_driverName": "Bob",
-    "_totalDrivingTime": 0,
-    "_totalMilesDriven": 0,
-    "_trips": Array [],
   },
 ]
 `;
@@ -96,7 +84,6 @@ Array [
 exports[`utility/driver.js sortDrivers method returns a list of drivers sorted ascending or descending, by distance, miles, or mph sortDrivers('desc', 'dist') 1`] = `
 Array [
   Object {
-    "_averageSpeed": 34,
     "_driverName": "Alex",
     "_totalDrivingTime": 1.25,
     "_totalMilesDriven": 42,
@@ -109,7 +96,6 @@ Array [
     ],
   },
   Object {
-    "_averageSpeed": 47,
     "_driverName": "Dan",
     "_totalDrivingTime": 0.833333333333333,
     "_totalMilesDriven": 39.1,
@@ -125,13 +111,6 @@ Array [
         "_totalMilesDriven": 21.8,
       },
     ],
-  },
-  Object {
-    "_averageSpeed": 0,
-    "_driverName": "Bob",
-    "_totalDrivingTime": 0,
-    "_totalMilesDriven": 0,
-    "_trips": Array [],
   },
 ]
 `;
