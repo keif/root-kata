@@ -3,8 +3,11 @@ Driver Alex
 Driver Bob
 Driver TestHighSpeed
 Driver TestLowSpeed
+Driver TestHighwayPercentage
 Trip Dan 07:15 07:45 17.3
 Trip Dan 06:12 06:32 21.8
 Trip Alex 12:01 13:16 42.0
 Trip TestHighSpeed 00:01 08:59 1000.0
 Trip TestLowSpeed 00:01 01:02 1.0
+Trip TestHighwayPercentage 07:00 09:00 100 
+Trip TestHighwayPercentage 07:00 11:00 200 
